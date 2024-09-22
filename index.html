@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .error__input{
+        border: 2px solid red;
+    }
+    .error{
+        color: red;
+    }
+</style>
+<body>
+    <div class="registr">
+        <form name="signin" method="get">
+            <div class="input">
+                <label for="name">Имя*</label>
+                <input type="text" name="name">
+                <p id="nameError" class="error"></p>
+            </div>
+            <div class="input">
+                <label for="age">Возраст*</label>
+                <input type="text" name="age">
+                <p id="ageError" class="error"></p>
+            </div>
+            <input type="submit" value="Отправить" class="btn">
+        </form>
+    </div>
+
+    <script>
+        let form = document.forms.signin;
+        let nameInput = form.elements.name;
+        let ageInput = form.elements.age;
+
+        form.addEventListener('submit', userSignin)
+        let flag = true;
+        let user;
+        function userSignin(event){
+            event.preventDefault();
+            nameError.innerHTML = ''
+            ageError.innerHTML = ''
+            flag = true;
+            if(nameInput.classList.contains('error__input')){
+                nameInput.classList.remove('error__input');
+            }
+            if(ageInput.classList.contains('error__input')){
+                ageInput.classList.remove('error__input');
+            }
+
+            if(!nameInput.value){
+                nameInput.classList.add('error__input');
+                nameError.innerHTML = 'Введите свое имя';
+                flag = false;
+            }
+            if(!ageInput.value){
+                ageInput.classList.add('error__input');
+                ageError.innerHTML = 'Введите Ваш возраст';
+                flag = false;
+            }
+            if(flag){
+                user = nameInput.value;
+                userEmail.innerHTML = `Здравствуйте, ${user}, мы Вас ждали!`
+            }
+            nameInput.onchange = function(){
+            if(nameInput.value.length<2){
+                nameInput.classList.add('error__input');
+                nameError.innerHTML = 'Введите не менее 2 символов'
+            }else{
+                nameError.innerHTML = '';
+                nameInput.classList.remove('error__input')
+            }       
+        }
+        ageInput.onchange = function(){
+            if(ageInput.value.length<4){
+                ageInput.classList.add('error__input');
+                ageError.innerHTML = 'Введите не больше 4 символов'
+            }else{
+                ageError.innerHTML = '';
+                ageInput.classList.remove('error__input')
+            }
+            if(ageInput.value.length<18){
+                alert('Извините, но вы не совершеннолетний');
+            }     
+        }
+        }
+    </script>
+</body>
+</html>
